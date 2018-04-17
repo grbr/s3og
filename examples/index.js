@@ -61,6 +61,11 @@ const nats = Nats.connect({
   }
 })
 nats.on('connect', () => {
+  S3og.exitHandler({
+    cleanup: () => nats.close(),
+    onStop: event => console.log('app stop:', event),
+    onDead: error => console.log('app dead:', error)
+  })
   pingpong(nats)
   .then(() => sink(nats))
   .then(() => process.exit())
