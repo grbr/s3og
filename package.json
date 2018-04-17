@@ -1,0 +1,28 @@
+{
+  "name": "s3og",
+  "version": "0.1.9",
+  "description": "wrap NATS to build event-based microservices",
+  "main": "lib/s3og.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "node ./examples",
+    "pretest": "npm run lint",
+    "lint": "./node_modules/eslint/bin/eslint.js --ext .js ./"
+  },
+  "author": "grbr",
+  "license": "MIT",
+  "dependencies": {
+    "nats": "^0.8.4",
+    "stackhash": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}
