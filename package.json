@@ -1,6 +1,6 @@
 {
   "name": "s3og",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "wrap NATS to build event-based microservices",
   "main": "lib/s3og.js",
   "directories": {
@@ -10,6 +10,10 @@
     "test": "node ./examples",
     "pretest": "npm run lint",
     "lint": "./node_modules/eslint/bin/eslint.js --ext .js ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grbr/s3og.git"
   },
   "author": "grbr",
   "license": "MIT",
