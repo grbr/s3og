@@ -15,7 +15,11 @@
     "type": "git",
     "url": "https://github.com/grbr/s3og.git"
   },
-  "author": "grbr",
+  "keywords": [
+    "nats",
+    "microservice"
+  ],
+  "author": "Gregory Brilev",
   "license": "MIT",
   "dependencies": {
     "nats": "^0.8.4",
