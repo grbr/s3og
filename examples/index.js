@@ -2,7 +2,6 @@ const S3og = require('../lib/s3og')
 // opts = {cleanup, onStop, onDead}
 S3og.exitHandler()
 const Nats = require('nats')
-const fs = require('fs')
 
 async function pingpong (nats) {
   const pingpongService = new S3og(
@@ -49,16 +48,10 @@ async function sink (nats) {
 }
 
 const nats = Nats.connect({
-  url: 'tls://gnatsd.local:4222',
-  rejectUnauthorized: true,
+  url: 'nats://gnatsd.local:4222',
   maxReconnectAttempts: 20,
   reconnectTimeWait: 500,
-  json: true,
-  tls: {
-    key: fs.readFileSync('/home/gb/tools/EasyRSA-3.0.4/pki/private/wallets-test.key'),
-    cert: fs.readFileSync('/home/gb/tools/EasyRSA-3.0.4/pki/issued/wallets-test.crt'),
-    ca: [fs.readFileSync('/home/gb/tools/EasyRSA-3.0.4/pki/ca.crt')]
-  }
+  json: true
 })
 nats.on('connect', () => {
   S3og.exitHandler({
