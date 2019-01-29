@@ -20,9 +20,9 @@ async function pingpong (nats) {
   // pingpongService.on('TASK_END', taskResult => console.log(taskResult))
   pingpongService.on('STOP', reason => console.log(`${pingpongService.name} stop:`, reason))
   console.log('start', new Date())
-  const proxy = pingpongService.go(nats)
+  const ether = pingpongService.go(nats)
   console.log(pingpongService.controllers)
-  console.log(await proxy.ask('test.pingpong.ping', { message: 'ping' }))
+  console.log(await ether.ask('test.pingpong.ping', { message: 'ping' }))
 }
 
 async function sink (nats) {
@@ -39,12 +39,12 @@ async function sink (nats) {
   // sinkService.on('TASK_END', taskResult => console.log(taskResult))
   sinkService.on('STOP', reason => console.log(`${sinkService.name} stop:`, reason))
   console.log('start', new Date())
-  const proxy = sinkService.go(nats)
+  const ether = sinkService.go(nats)
   console.log(sinkService.controllers)
-  console.log('must be only 3 random values:', await proxy.sink('test.sink.producer', null, 1000, 3))
-  console.log('must be 5 random values:', await proxy.sink('test.sink.producer', null, 1000, 99))
-  console.log('must be 0 random values:', await proxy.sink('test.sink.producer', null, 1, 99))
-  sinkService.stop()
+  console.log('must be only 3 random values:', await ether.sink('test.sink.producer', null, 1000, 3))
+  console.log('must be 5 random values:', await ether.sink('test.sink.producer', null, 1000, 99))
+  console.log('must be 0 random values:', await ether.sink('test.sink.producer', null, 1, 99))
+  sinkService.stop('task end')
 }
 
 const nats = Nats.connect({

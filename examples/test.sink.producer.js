@@ -1,3 +1,3 @@
-module.exports = async (proxy, request, subject) => {
+module.exports = async (ether, request, subject) => {
   return { randomOne: Math.random() }
 }

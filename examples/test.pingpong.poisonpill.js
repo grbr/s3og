@@ -1,3 +1,3 @@
-module.exports = async (proxy, request, subject) => {
-  proxy.die('poison pill')
+module.exports = async (ether, request, subject) => {
+  ether.die('poison pill')
 }
