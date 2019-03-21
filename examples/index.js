@@ -28,7 +28,7 @@ async function pingpong (nats) {
 async function sink (nats) {
   const sinkService = new S3og('sink')
   // all controllers runned in same process. just for a demonstration
-  for (let i in [1, 2, 3, 4, 5]) {
+  for (let i in [1, 2]) {
     console.log('producer', i)
     sinkService.use({
       subject: 'test.sink.producer',
@@ -41,9 +41,10 @@ async function sink (nats) {
   console.log('start', new Date())
   const ether = sinkService.go(nats)
   console.log(sinkService.controllers)
-  console.log('must be only 3 random values:', await ether.sink('test.sink.producer', null, 1000, 3))
-  console.log('must be 5 random values:', await ether.sink('test.sink.producer', null, 1000, 99))
+  console.log('must be only 1 random values:', await ether.sink('test.sink.producer', null, 1000, 1))
+  console.log('must be 2 random values:', await ether.sink('test.sink.producer', null, 1000, 99))
   console.log('must be 0 random values:', await ether.sink('test.sink.producer', null, 1, 99))
+  console.log('must be 2 errors:', await ether.sink('test.sink.producer', { beBad: true }, 1000, 1))
   sinkService.stop('task end')
 }
 
