@@ -48,6 +48,19 @@ async function sink (nats) {
   sinkService.stop('task end')
 }
 
+async function badSubject (nats) {
+  const badSubject = new S3og('bad-subject')
+  badSubject.on('STOP', reason => console.log(`${badSubject.name} stop:`, reason))
+  const ether = badSubject.go(nats)
+  try {
+    console.log('must be subject property:')
+    await ether.ask('unexisting.subject', {}, {}, 1)
+  } catch (err) {
+    console.log(err)
+  }
+  badSubject.stop('task end')
+}
+
 const nats = Nats.connect({
   url: 'nats://gnatsd.local:4222',
   maxReconnectAttempts: 20,
@@ -62,6 +75,7 @@ nats.on('connect', () => {
   })
   pingpong(nats)
   .then(() => sink(nats))
+  .then(() => badSubject(nats))
   .then(() => process.exit())
   .catch(e => process.exit(e))
 })
