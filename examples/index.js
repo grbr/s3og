@@ -61,6 +61,22 @@ async function badSubject (nats) {
   badSubject.stop('task end')
 }
 
+async function checkLogger (nats) {
+  const checkLoggerService = new S3og('checkLoggerService')
+  const logger = require('pino')()
+  checkLoggerService.attachLogger(logger)
+  checkLoggerService.use({
+    subject: 'some.task',
+    handler: async (ether, request, subject) => {
+      return 'task result'
+    }
+  })
+  const ether = checkLoggerService.go(nats)
+  console.log('must be 3 log entries:')
+  await ether.ask('some.task')
+  checkLoggerService.stop('some crash reason')
+}
+
 const nats = Nats.connect({
   url: 'nats://gnatsd.local:4222',
   maxReconnectAttempts: 20,
@@ -76,6 +92,7 @@ nats.on('connect', () => {
   pingpong(nats)
   .then(() => sink(nats))
   .then(() => badSubject(nats))
+  .then(() => checkLogger(nats))
   .then(() => process.exit())
   .catch(e => process.exit(e))
 })
