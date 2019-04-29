@@ -71,8 +71,8 @@ async function checkLogger (nats) {
       return 'task result'
     }
   })
+  console.log('must be 5 log entries:')
   const ether = checkLoggerService.go(nats)
-  console.log('must be 4 log entries:')
   await ether.ask('some.task')
   checkLoggerService.stop('some crash reason')
 }
