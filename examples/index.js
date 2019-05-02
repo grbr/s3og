@@ -42,8 +42,8 @@ async function sink (nats) {
   const ether = sinkService.go(nats)
   console.log(sinkService.controllers)
   console.log('must be only 1 random values:', await ether.sink('test.sink.producer', null, 1000, 1))
-  console.log('must be 2 random values:', await ether.sink('test.sink.producer', null, 1000, 99))
-  console.log('must be 0 random values:', await ether.sink('test.sink.producer', null, 1, 99))
+  console.log('must be 2 random values:', await ether.sink('test.sink.producer', null, 1000))
+  console.log('must be 0 random values:', await ether.sink('test.sink.producer', null, 1))
   console.log('must be 2 errors:', await ether.sink('test.sink.producer', { beBad: true }, 1000, 1))
   sinkService.stop('task end')
 }
