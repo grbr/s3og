@@ -1,4 +1,4 @@
-const S3og = require('../lib/s3og')
+const S3og = require('./lib/s3og')
 // opts = {cleanup, onStop, onDead}
 S3og.exitHandler()
 const Nats = require('nats')
@@ -11,7 +11,7 @@ async function pingpong (nats) {
   )
   const TEST_GROUP = 'test.group'
   const controllers = S3og.readControllersFromDir({
-    path: './',
+    path: './examples',
     mask: /test.pingpong.*/,
     group: TEST_GROUP
   })
@@ -32,7 +32,7 @@ async function sink (nats) {
     console.log('producer', i)
     sinkService.use({
       subject: 'test.sink.producer',
-      handler: require('./test.sink.producer')
+      handler: require('./examples/test.sink.producer')
     })
   }
   // sinkService.on('TASK', task => console.log(task))
@@ -45,6 +45,7 @@ async function sink (nats) {
   console.log('must be 2 random values:', await ether.sink('test.sink.producer', null, 1000))
   console.log('must be 0 random values:', await ether.sink('test.sink.producer', null, 1))
   console.log('must be 2 errors:', await ether.sink('test.sink.producer', { beBad: true }, 1000, 1))
+  console.log(await ether.sink('instance', null, 100))
   sinkService.stop('task end')
 }
 
@@ -58,7 +59,7 @@ async function badSubject (nats) {
   } catch (err) {
     console.log(err)
   }
-  badSubject.stop('task end')
+  badSubject.stop('tets end')
 }
 
 async function checkLogger (nats) {
@@ -74,7 +75,15 @@ async function checkLogger (nats) {
   console.log('must be 5 log entries:')
   const ether = checkLoggerService.go(nats)
   await ether.ask('some.task')
-  checkLoggerService.stop('some crash reason')
+  checkLoggerService.stop('test end')
+}
+
+async function checkInstance (nats) {
+  const checkInstanceService = new S3og('checkInstanceService')
+  console.log('must be instance response:')
+  const ether = checkInstanceService.go(nats)
+  console.log(await ether.sink('instance', null, 100))
+  checkInstanceService.stop('test end')
 }
 
 const nats = Nats.connect({
@@ -93,6 +102,7 @@ nats.on('connect', () => {
   .then(() => sink(nats))
   .then(() => badSubject(nats))
   .then(() => checkLogger(nats))
+  .then(() => checkInstance(nats))
   .then(() => process.exit())
   .catch(e => process.exit(e))
 })

@@ -1,6 +1,6 @@
 {
   "name": "s3og",
-  "version": "0.1.27",
+  "version": "0.2.1",
   "description": "Wrap NATS to build event-based microservices",
   "main": "lib/s3og.js",
   "directories": {

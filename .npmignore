@@ -11,12 +11,9 @@ logs/*
 reports/*
 tmp/*
 
-benchmark/
+examples.js
 examples/
 test/
-.travis.yml
-Makefile
-TODO
 .gitignore
 .editorconfig
 .eslintconfig
