@@ -92,6 +92,7 @@ const nats = Nats.connect({
   reconnectTimeWait: 500,
   json: true
 })
+
 nats.on('connect', () => {
   S3og.exitHandler({
     cleanup: () => nats.close(),

@@ -1,6 +1,6 @@
 {
   "name": "s3og",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Wrap NATS to build event-based microservices",
   "main": "lib/s3og.js",
   "directories": {
@@ -22,6 +22,7 @@
   "author": "Gregory Brilev",
   "license": "MIT",
   "dependencies": {
+    "nanoid": "^2.0.3",
     "stackhash": "^1.0.0"
   },
   "devDependencies": {
