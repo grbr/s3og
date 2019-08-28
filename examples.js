@@ -46,7 +46,7 @@ async function sink (nats) {
   console.log('must be 0 random values:', await ether.sink('test.sink.producer', null, 1))
   console.log('must be 2 errors:', await ether.sink('test.sink.producer', { beBad: true }, 1000, 1))
   console.log(await ether.sink('instance', null, 100))
-  sinkService.stop('task end')
+  sinkService.stop('sink task end')
 }
 
 async function badSubject (nats) {
@@ -59,7 +59,7 @@ async function badSubject (nats) {
   } catch (err) {
     console.log(err)
   }
-  badSubject.stop('tets end')
+  badSubject.stop('badSubject test end')
 }
 
 async function checkLogger (nats) {
@@ -72,18 +72,19 @@ async function checkLogger (nats) {
       return 'task result'
     }
   })
-  console.log('must be 5 log entries:')
+  console.log('must be 3 log entries:')
   const ether = checkLoggerService.go(nats)
   await ether.ask('some.task')
-  checkLoggerService.stop('test end')
+  await ether.sink('instance', null, 100, 1)
+  checkLoggerService.stop('checkLogger test end')
 }
 
 async function checkInstance (nats) {
   const checkInstanceService = new S3og('checkInstanceService')
   console.log('must be instance response:')
   const ether = checkInstanceService.go(nats)
-  console.log(await ether.sink('instance', null, 100))
-  checkInstanceService.stop('test end')
+  console.log(await ether.sink('instance', null, 100, 2))
+  checkInstanceService.stop('checkInstance test end')
 }
 
 const nats = Nats.connect({
