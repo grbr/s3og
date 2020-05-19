@@ -4,6 +4,7 @@ S3og.exitHandler()
 const Nats = require('nats')
 
 async function pingpong (nats) {
+  hr()
   const pingpongService = new S3og(
     'pingpong', {
       defaultRequestTimeout: 1000
@@ -26,6 +27,7 @@ async function pingpong (nats) {
 }
 
 async function sink (nats) {
+  hr()
   const sinkService = new S3og('sink')
   // all controllers runned in same process. just for a demonstration
   for (const i in [1, 2]) {
@@ -49,11 +51,12 @@ async function sink (nats) {
 }
 
 async function badSubject (nats) {
+  hr()
   const badSubject = new S3og('bad-subject')
   badSubject.on('STOP', reason => console.log(`${badSubject.name} stop:`, reason))
   const ether = badSubject.go(nats)
   try {
-    console.log('must be subject property:')
+    console.log('error must have property subject="unexisting.subject"')
     await ether.ask('unexisting.subject', {}, {}, 1)
   } catch (err) {
     console.log(err)
@@ -62,6 +65,7 @@ async function badSubject (nats) {
 }
 
 async function checkLogger (nats) {
+  hr()
   const checkLoggerService = new S3og('checkLoggerService')
   const logger = require('pino')()
   checkLoggerService.attachLogger(logger)
@@ -79,6 +83,7 @@ async function checkLogger (nats) {
 }
 
 async function checkInstance (nats) {
+  hr()
   const checkInstanceService = new S3og('checkInstanceService')
   console.log('must be instance response:')
   const ether = checkInstanceService.go(nats)
@@ -107,3 +112,10 @@ nats.on('connect', () => {
   .then(() => process.exit())
   .catch(e => process.exit(e))
 })
+
+function hr () {
+  // drows delimitter
+  console.log(`
+******************************TEST******************************
+  `)
+}
