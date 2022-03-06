@@ -1,6 +1,6 @@
 {
   "name": "s3og",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Wrap NATS to build event-based microservices",
   "main": "lib/s3og.js",
   "directories": {
@@ -26,7 +26,7 @@
     "stackhash": "^1.1.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint": "^8.10.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^9.2.0",
