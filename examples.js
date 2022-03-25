@@ -92,7 +92,7 @@ async function checkInstance (nats) {
 }
 
 const nats = Nats.connect({
-  url: 'nats://gnatsd.local:4222',
+  url: 'nats://localhost:4222',
   maxReconnectAttempts: 20,
   reconnectTimeWait: 500,
   json: true
