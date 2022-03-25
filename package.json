@@ -1,7 +1,7 @@
 {
   "name": "s3og",
   "version": "0.2.10",
-  "description": "Wrap NATS to build event-based microservices",
+  "description": "rpc/messaging service over NATS",
   "main": "lib/s3og.js",
   "directories": {
     "lib": "lib"
@@ -16,8 +16,9 @@
     "url": "https://github.com/grbr/s3og.git"
   },
   "keywords": [
-    "nats",
-    "microservice"
+    "rpc",
+    "microservice",
+    "nats"
   ],
   "author": "Gregory Brilev",
   "license": "MIT",
