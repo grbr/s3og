@@ -1,6 +1,6 @@
 {
   "name": "s3og",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "rpc/messaging service over NATS",
   "main": "lib/s3og.js",
   "directories": {
